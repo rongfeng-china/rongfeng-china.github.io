@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Introduction and course overview [1]</title>
+  <meta name="description" content="第一节: Introduction and course overviewBerkeley课程网站课件+视频第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。">
+  <meta name="author" content="Wei Wang">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Introduction and course overview [1]">
+  <meta name="twitter:description" content="第一节: Introduction and course overviewBerkeley课程网站课件+视频第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。">
+  
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Introduction and course overview [1]">
+  <meta property="og:description" content="第一节: Introduction and course overviewBerkeley课程网站课件+视频第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。">
+  
+  <link rel="icon" type="image/png" href="/assets/images/favicon.png" />
+  <link href="/assets/images/favicon.png" rel="shortcut icon" type="image/png">
+  
+  <link rel="stylesheet" href="/css/main.css">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+  <link rel="canonical" href="http://localhost:4000/2017/11/DRL1/">
+  <link rel="alternate" type="application/rss+xml" title="I'm WRong" href="http://localhost:4000/feed.xml">
+  
+  <meta name="google-site-verification" content="1-1ZlHoRvM0T2FqPbW2S-qLgYXN6rsn52kErlMPd_gw" />
+  
+</head>
+
+
+  <body>
+
+    <span class="mobile btn-mobile-menu">
+        <i class="fa fa-list btn-mobile-menu__icon"></i>
+        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+    </span>
+    
+    <header class="panel-cover panel-cover--collapsed" style="background-image: url('/assets/images/background-cover.jpg')">
+  <div class="panel-main">
+
+    <div class="panel-main__inner panel-inverted">
+    <div class="panel-main__content">
+
+        <a href="/#blog" title="前往 I'm WRong 的主页" class="blog-button"><img src="/assets/images/avatar.jpg" width="80" alt="I'm WRong logo" class="panel-cover__logo logo" /></a>
+        <h1 class="panel-cover__title panel-title"><a href="/#blog" title="link to homepage for I'm WRong" class="blog-button">I'm WRong</a></h1>
+        
+        <span class="panel-cover__subtitle panel-subtitle">The meaning of life is that it stops.</span>
+        
+        <hr class="panel-cover__divider" />
+        <p class="panel-cover__description">AI, Programming, Reading, Gym and Beautiful things.</p>
+        <hr class="panel-cover__divider panel-cover__divider--secondary" />
+        
+        
+        <p class="panel-cover__description"><a href="https://github.com/rongfeng-china/" target="_blank">Nothing</a></p>
+        
+        
+        <div class="navigation-wrapper">
+          <div>
+            <nav class="cover-navigation cover-navigation--primary">
+              <ul class="navigation">
+                <li class="navigation__item"><a href="/#blog" title="Visit blog" class="blog-button">Blog</a></li>
+                
+              </ul>
+            </nav>
+          </div>
+          
+          <div><nav class="cover-navigation navigation--social">
+  <ul class="navigation">
+
+  
+
+  
+  <!-- Github -->
+  <li class="navigation__item">
+    <a href="https://github.com/rongfeng-china" title="@rongfeng-china 的 Github" target="_blank">
+      <i class='social fa fa-github'></i>
+      <span class="label">Github</span>
+    </a>
+  </li>
+  
+  
+  
+
+  
+
+  <!-- RSS -->
+  <li class="navigation__item">
+    <a href="/feed.xml" rel="author" title="RSS" target="_blank">
+      <i class='social fa fa-rss'></i>
+      <span class="label">RSS</span>
+    </a>
+  </li>
+
+  
+  <!-- Email -->
+  <li class="navigation__item">
+    <a href="mailto:misswrongwong(at)gmail.com" title="Contact me">
+      <i class='social fa fa-envelope'></i>
+      <span class="label">Email</span>
+    </a>
+  </li>
+  
+
+  </ul>
+</nav>
+</div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <div class="panel-cover--overlay cover-disabled"></div>
+    
+  </div>
+</header>
+
+
+    <div class="content-wrapper">
+        <div class="content-wrapper__inner">
+            <article class="post-container post-container--single" itemscope itemtype="http://schema.org/BlogPosting">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="2017-11-01 13:45:00 -0600" itemprop="datePublished" class="post-meta__date date">2017-11-01</time> &#8226; <span class="post-meta__tags tags">DRL</span>
+    </div>
+    <h1 class="post-title">Introduction and course overview [1]</h1>
+  </header>
+
+  <section class="post">
+    <h2 id="第一节-introduction-and-course-overview">第一节: Introduction and course overview</h2>
+<p><em>Berkeley课程网站<a href="http://rll.berkeley.edu/deeprlcourse/">课件+视频</a><br />
+第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。</em></p>
+
+<p><strong>1. 什么是Deep RL？</strong> <br />
+答: Deep RL包含了deep learing（深度学习）和reinforcement learning（增强学习）。</p>
+
+<p><strong>2. 什么是Reinforcement learning？</strong> <br />
+答：增强学习就通过和环境互动，从环境中获得奖励来学习的一种方式。很通俗的一个例子是我们训练狗的时候，让它做一个动作，做的好就给肉吃（奖励），做的不好就挨打（惩罚）。通过一段时间的学习，这只狗就知道如何获得奖励不挨打。这整个训练的过程，狗是无法与人语言沟通的，在最开始并不知道应该怎么做可以吃肉，它是完全经过自己的经历和体验获得的这种“智慧”。</p>
+
+<p>再如下图，是经典的RL模型，机器人做决定，执行行为（actions），环境会对行为给出反馈。这个反馈包括了新的观测结果和奖励反馈。这个反馈反作用于机器人，让它作下一次的行为决定。这个机器人和环境间互相作用，反复循环的模型就是RL。</p>
+
+<p><img src="/pics/DRL1-1.png" alt="Fig. 1  " title="RL" height="260px" width="350px" /></p>
+
+<p><strong>3. Deep RL 现在可以做什么？</strong> <br />
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。</p>
+
+<p><strong>4. 为什么要深度学习呢？</strong> <br />
+答：<strong>因为深度模型能帮助增强学习算法“端对端”(end-to-end)地解决复杂的问题。</strong></p>
+
+<p>要理解”端对端“，可以看下面两张图。图1中，上面一行是一个标准的机器视觉算法例子：输入图像，提取特征，提取中层特征，分类器输出分类结果。下面一行是一个深度学习“端对端”的例子：输入图像，通过深度神经网络，直接输出分类结果。当然，这个深度神经网络是经过大量的图像-类别训练过的。
+<img src="/pics/DRL1-2.png" alt="Fig. 2  " title="end to end1" /></p>
+
+<p>图2是在机器人领域的一个例子。上面一行是一个标准的机器人控制流程：观测数据，状态估计，模型预测，规划，低水平的控制，输出机器人控制信号。下面一行是深度学习“端对端”的例子：输入观测值，通过神经网络，直接输出机器人控制信号。和机器视觉那个例子一样，这个深度网络也是需要通过大量的观测值-机器人控制信号的训练样本训练。
+<img src="/pics/DRL1-3.png" alt="Fig. 3 " title="end to end2" /></p>
+
+<p><strong>5. 什么时候要用增强学习呢？</strong> <br />
+答：序列决策的时候。什么是序列决策呢？当你的系统是单一独立的决定，不影响到未来的决定的时候，就不需要序列决策，比如分类、逻辑回归。相反，当你的当前决定影响到未来决定的时候，你就需要考虑序列决策，比如机器人控制、自动车驾驶、语言对话和金融模型。</p>
+
+<p><strong>6. 为什么现在要学习Deep RL呢？</strong><br />
+ 答： 因为深度学习，增强学习以及计算能力的最新进展，创造了特别好的环境，Deep RL 是应运而生。</p>
+
+<p><strong>7. 除了增强学习，还有其他形式的监督式学习吗?</strong><br />
+ 答： 1) 模仿学习(Learning from demonstrations): 直接从观测行为中推断奖励。2) 从观测世界中学习(Learning from observing the world): 非监督式的方式学习预测。3) 任务学习（Learning from other tasks): 迁移学习，学习如何学习。</p>
+
+<p><strong>8. Deep RL 现在可以做什么？</strong> <br />
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。</p>
+
+<p><strong>9. Deep RL 的挑战是什么？</strong> <br />
+ 答： 1) 人类学的很快，而Deep RL通常很慢 2）人类可以重新使用以前的只是，而迁移学习还是一个问题 3）奖励机制和预测模型应该如何设计，还不清楚。</p>
+
+
+  </section>
+</article>
+
+<section class="read-more">
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">最近的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/11/DRL2/" title="link to Introduction and course overview [1]">Introduction and course overview [1]</a></h2>
+       <p class="excerpt">第一节: Introduction and course overviewBerkeley课程网站课件+视频第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。1. 什么是Deep RL？ 答: Deep RL包含了deep learing（深度学习）和reinforcement learning（增强学习）。2. 什么是Reinforcement learning...&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-11-01 13:45:00 -0600" class="post-list__meta--date date">2017-11-01</time> &#8226; <span class="post-list__meta--tags tags">DRL</span><a class="btn-border-small" href=/2017/11/DRL2/>继续阅读</a></div>
+   </div>
+   
+   
+   
+   
+   <div class="read-more-item">
+       <span class="read-more-item-dim">更早的文章</span>
+       <h2 class="post-list__post-title post-title"><a href="/2017/01/test_first/" title="link to 我的第一篇Blog">我的第一篇Blog</a></h2>
+       <p class="excerpt">世界在人的心里，用心去聆听，去感受， 读懂人心，就是读懂世界。图片来源&hellip;</p>
+       <div class="post-list__meta"><time datetime="2017-01-12 03:11:11 -0700" class="post-list__meta--date date">2017-01-12</time> &#8226; <span class="post-list__meta--tags tags">Reading</span><a class="btn-border-small" href=/2017/01/test_first/>继续阅读</a></div>
+   </div>
+   
+</section>
+
+<section class="post-comments">
+  
+    <div id="disqus_thread"></div>
+    <script>
+    
+    var disqus_config = function () {
+        this.page.url = "http://localhost:4000/2017/11/DRL1/";
+        this.page.identifier = "/2017/11/DRL1/";
+    };
+
+    var disqus_shortname = 'vno-jekyll';
+    
+    (function() { // DON'T EDIT BELOW THIS LINE
+        var d = document, s = d.createElement('script');
+        s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+    <noscript>要查看<a href="http://disqus.com/?ref_noscript"> Disqus </a>评论，请启用 JavaScript</noscript>
+    
+  
+  
+  
+  
+</section>
+
+
+            <section class="footer">
+    <footer>
+    	<span class="footer__copyright">本站点采用<a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享 署名-非商业性使用-相同方式共享 4.0 国际 许可协议</a></span>
+        <span class="footer__copyright">由 <a href="https://jekyllrb.com">Jekyll</a> 于 2017-12-04 生成，感谢 <a href="https://www.digitalocean.com/?refcode=30ed2d146762">Digital Ocean</a> 为本站提供稳定的 VPS 服务</span>
+        <span class="footer__copyright">本站由 <a href="http://rongfeng-china.github.io">@rong</a> 创建，采用 <a href="https://github.com/onevcat/vno-jekyll">Vno - Jekyll</a> 作为主题，您可以在 GitHub 找到<a href="https://github.com/onevcat/OneV-s-Den">本站源码</a> - &copy; 2017</span>
+    </footer>
+</section>
+
+        </div>
+    </div>
+    
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+
+
+    
+  </body>
+
+</html>

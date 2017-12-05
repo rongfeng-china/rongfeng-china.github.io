@@ -5,9 +5,323 @@
     <description>AI, Programming, Reading, Gym and Beautiful things.</description>
     <link>http://localhost:4000/</link>
     <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 04 Dec 2017 18:57:48 -0700</pubDate>
-    <lastBuildDate>Mon, 04 Dec 2017 18:57:48 -0700</lastBuildDate>
+    <pubDate>Mon, 04 Dec 2017 18:59:17 -0700</pubDate>
+    <lastBuildDate>Mon, 04 Dec 2017 18:59:17 -0700</lastBuildDate>
     <generator>Jekyll v3.4.0</generator>
+    
+      <item>
+        <title>UCL增强学习课程笔记[2]</title>
+        <description>&lt;h2 id=&quot;1-introduction-to-reinforcement-learning&quot;&gt;1: Introduction to Reinforcement Learning&lt;/h2&gt;
+&lt;p&gt;课程网站&lt;a href=&quot;http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html&quot;&gt;课件+视频&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;1-机器学习的分支&quot;&gt;1. 机器学习的分支：&lt;/h2&gt;
+&lt;p&gt;1.监督式学习（有标签），2.非监督式学习（无标签），3.增强学习（无标签，有环境反馈) &lt;br /&gt;
+增强学习和其他方法不同之处在于：&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;不像监督式学习有标签，它只有奖励信号(reward signal)&lt;/li&gt;
+  &lt;li&gt;反馈是延迟的，而不是立刻的&lt;/li&gt;
+  &lt;li&gt;时间很重要&lt;/li&gt;
+  &lt;li&gt;agent（可以理解为机器人，或者在图2中的人脑）的行为影响接下来一系列接受到的反馈数据
+&lt;img src=&quot;/pics/L1-1.png&quot; alt=&quot; &quot; title=&quot;machine learning branches&quot; height=&quot;260px&quot; width=&quot;350px&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;2-增强学习基本概念&quot;&gt;2. 增强学习基本概念&lt;/h2&gt;
+&lt;p&gt;典型的增强学习场景：Agent（人脑）控制动作，这些动作作用于环境（地球），环境给予反馈。人脑通过观察环境，和分析奖惩，再做下一个决定。&lt;em&gt;这在日常生活中很常见，也很容易理解。比如你这一秒在写作业，下一秒决定去玩（动作），结果会被爸妈打（反馈），所以被迫回来继续写作业（下一个动作）。当然了，你不会一下子就那么听话的，经过多次反馈，你就学会了对于自己有益的策略。&lt;/em&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;在时刻t的时候, agent人脑：
+    &lt;ul&gt;
+      &lt;li&gt;执行动作 $ A_t $&lt;/li&gt;
+      &lt;li&gt;接收到环境的观测值$O_t$&lt;/li&gt;
+      &lt;li&gt;接收到环境的奖励$R_t$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;环境：
+    &lt;ul&gt;
+      &lt;li&gt;接收到行为$A_t$&lt;/li&gt;
+      &lt;li&gt;释放观测信号$O_{t+1}$&lt;/li&gt;
+      &lt;li&gt;释放奖励信号$R_{t+1}$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;t 时间增加
+&lt;img src=&quot;/pics/L1-2.png&quot; alt=&quot; &quot; title=&quot;RL basic concetps&quot; /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;3-对于变量的解释&quot;&gt;3. 对于变量的解释&lt;/h2&gt;
+&lt;p&gt;随着时间的增长，你会有很多关于观测$O_t$，行为$A_t$和奖励$R_t$的序列，我们可以称它为历史$H_t$。
+&lt;script type=&quot;math/tex&quot;&gt;H_t = O_1, R_1, A_1, ... , A_{t-1}, O_{t-1},R_{t-1}&lt;/script&gt;
+在增强学习里，你常会遇见一个$S_t$状态变量，这个状态变量就是对于历史的综合处理$S_t = f(H_t)$， 它可以用来对未来发生的事情做判断和决定。我们不是常说从历史中吸取经验教训嘛，就是这个道理。&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;其实我很佩服Rich Sutton，他提出的增强学习模型很简单，但是很贴近人脑的运作方式。比如说从历史中学习经验教训，还有explore和exploit的行为模式（人在有些时候会探索未知、尝试新鲜的事情，另外一些时候我们会采取对于自己最优的策略。）从某种意义上，我觉得他的算法是很哲学的思考的结果。&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;$S_t$具体分有环境的状态$S_t^e$和Agent的状态$S_t^a$，当环境是完全可观测的（fully observable)，也就是Agent能直接看到环境的状态的时候，$S_t^e$和$S_t^a$就是等同的。然而，如果环境是部分可观测的(partially observable)，Agent获得到的就不是直接的环境状态。&lt;/p&gt;
+
+&lt;h2 id=&quot;4-增强学习agent的组成&quot;&gt;4. 增强学习Agent的组成&lt;/h2&gt;
+&lt;p&gt;一个增强学习的Agent可能包括一个或者更多个以下的组成部分：&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;策略（Policy)&lt;/strong&gt;: Agent如何做行为决策&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;价值函数(Value Function)&lt;/strong&gt;: 判断一个状态 与/或 一个行为的好坏&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;模型(Model)&lt;/strong&gt;: Agent对于环境的表达&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;策略（Policy)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;它是Agent的行为方式。&lt;/li&gt;
+  &lt;li&gt;给定一个状态S，经过策略，可以得到一个行为A。所以策略是从状态到行为的映射。&lt;/li&gt;
+  &lt;li&gt;决定策略 (Determitistic Policy),在状态S下，Agent一定会执行动作a。&lt;br /&gt;
+$a = \pi(s)$&lt;/li&gt;
+  &lt;li&gt;随机策略 (Stochastic Policy)， 在状态s下，Agent执行a的概率。&lt;br /&gt;
+$\pi(a|s)=p[A_t = a| S_t = s] $&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;价值函数(Value Function)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;它是对于未来奖惩的预测&lt;/li&gt;
+  &lt;li&gt;被用于评估一个状态的好坏&lt;/li&gt;
+  &lt;li&gt;因此被用于选择行为A，例如以下是对于未来获得奖励的一个期望：&lt;br /&gt;
+$V_{\pi}(s) = E_{\pi}[ R_{t+1}+\gamma R_{t+2}+\gamma^2R_{t+3}+…. | S_t = s]$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;模型(Model)&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;它是用于预测接下来环境会做什么&lt;/li&gt;
+  &lt;li&gt;P 预测下一个状态&lt;/li&gt;
+  &lt;li&gt;R 预测下一个即刻奖惩 (reward),例如：
+$ P_{ss’}^a = P[S_{t+1}= s’ | S_t = s , A_t = a ]$&lt;br /&gt;
+$ R_s^a = E [R_{t+1}| S_t = s, A_t = a ]$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;接下来课件里举了一个迷宫的例子(Maze example)，帮助你理解之前介绍的所有概念，可以跟着课件细细看，这里就不细讲了。&lt;/p&gt;
+
+&lt;h2 id=&quot;5-增强学习的分类&quot;&gt;5. 增强学习的分类&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;基于价值(value based)
+    &lt;ul&gt;
+      &lt;li&gt;价值函数&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;基于策略(policy based)
+    &lt;ul&gt;
+      &lt;li&gt;策略方法&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;演员评判家 (Actor Critic )
+    &lt;ul&gt;
+      &lt;li&gt;既有价值函数，又有策略方法&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;另一种是根据模型来分类：Model Free是指不需要去猜测environment的工作方式，而Model based则是需要学习environment的工作方式。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pics/L1-3.png&quot; alt=&quot; &quot; title=&quot;RL categorizing&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;6-增强学习和规划planning的异同&quot;&gt;6. 增强学习和规划(planning)的异同&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;增强学习
+    &lt;ul&gt;
+      &lt;li&gt;环境是部分已知&lt;/li&gt;
+      &lt;li&gt;Agent和环境交互&lt;/li&gt;
+      &lt;li&gt;Agent改进自己的策略&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;规划
+    &lt;ul&gt;
+      &lt;li&gt;环境模型已知&lt;/li&gt;
+      &lt;li&gt;Agent根据模型进行计算（不交互）&lt;/li&gt;
+      &lt;li&gt;Agent 改进自己的策略&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;7-探索和利用exploration-and-exploitation&quot;&gt;7. 探索和利用(Exploration and Exploitation)&lt;/h2&gt;
+&lt;p&gt;总而言之，增强学习是一种试错学习（trial-and-error), Agent能够通过和环境交互中的经验，发现一个好的策略。增强学习选择动作，包括探索和利用。探索是为了发现更多关于环境的信息，利用是为了充分利用已有的经验而最大化奖励。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://localhost:4000/2017/11/RL_notes/&quot;&gt;更多RL文章&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Wed, 29 Nov 2017 12:45:00 -0700</pubDate>
+        <link>http://localhost:4000/2017/11/RL1-notes/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/RL1-notes/</guid>
+        
+        <category>RL</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
+    
+      <item>
+        <title>UCL增强学习课程笔记, David Silver</title>
+        <description>&lt;h2 id=&quot;ucl-增强学习课程--david-silver&quot;&gt;UCL 增强学习课程 – David Silver&lt;/h2&gt;
+&lt;p&gt;课程网站&lt;a href=&quot;http://www0.cs.ucl.ac.uk/staff/D.Silver/web/Teaching.html&quot;&gt;课件+视频&lt;/a&gt;
+	Lecture 1: Introduction to Reinforcement Learning
+	Lecture 2: Markov Decision Processes
+	Lecture 3: Planning by Dynamic Programming
+	Lecture 4: Model-Free Prediction
+	Lecture 5: Model-Free Control
+	Lecture 6: Value Function Approximation
+	Lecture 7: Policy Gradient Methods
+	Lecture 8: Integrating Learning and Planning
+	Lecture 9: Exploration and Exploitation
+	Lecture 10: Case Study: RL in Classic Games&lt;/p&gt;
+</description>
+        <pubDate>Mon, 27 Nov 2017 12:45:00 -0700</pubDate>
+        <link>http://localhost:4000/2017/11/RL_notes/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/RL_notes/</guid>
+        
+        <category>RL</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
+    
+      <item>
+        <title>Introduction and course overview [1]</title>
+        <description>&lt;h2 id=&quot;第一节-introduction-and-course-overview&quot;&gt;第一节: Introduction and course overview&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Berkeley课程网站&lt;a href=&quot;http://rll.berkeley.edu/deeprlcourse/&quot;&gt;课件+视频&lt;/a&gt;&lt;br /&gt;
+第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 什么是Deep RL？&lt;/strong&gt; &lt;br /&gt;
+答: Deep RL包含了deep learing（深度学习）和reinforcement learning（增强学习）。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 什么是Reinforcement learning？&lt;/strong&gt; &lt;br /&gt;
+答：增强学习就通过和环境互动，从环境中获得奖励来学习的一种方式。很通俗的一个例子是我们训练狗的时候，让它做一个动作，做的好就给肉吃（奖励），做的不好就挨打（惩罚）。通过一段时间的学习，这只狗就知道如何获得奖励不挨打。这整个训练的过程，狗是无法与人语言沟通的，在最开始并不知道应该怎么做可以吃肉，它是完全经过自己的经历和体验获得的这种“智慧”。&lt;/p&gt;
+
+&lt;p&gt;再如下图，是经典的RL模型，机器人做决定，执行行为（actions），环境会对行为给出反馈。这个反馈包括了新的观测结果和奖励反馈。这个反馈反作用于机器人，让它作下一次的行为决定。这个机器人和环境间互相作用，反复循环的模型就是RL。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pics/DRL1-1.png&quot; alt=&quot;Fig. 1  &quot; title=&quot;RL&quot; height=&quot;260px&quot; width=&quot;350px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Deep RL 现在可以做什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 为什么要深度学习呢？&lt;/strong&gt; &lt;br /&gt;
+答：&lt;strong&gt;因为深度模型能帮助增强学习算法“端对端”(end-to-end)地解决复杂的问题。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;要理解”端对端“，可以看下面两张图。图1中，上面一行是一个标准的机器视觉算法例子：输入图像，提取特征，提取中层特征，分类器输出分类结果。下面一行是一个深度学习“端对端”的例子：输入图像，通过深度神经网络，直接输出分类结果。当然，这个深度神经网络是经过大量的图像-类别训练过的。
+&lt;img src=&quot;/pics/DRL1-2.png&quot; alt=&quot;Fig. 2  &quot; title=&quot;end to end1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图2是在机器人领域的一个例子。上面一行是一个标准的机器人控制流程：观测数据，状态估计，模型预测，规划，低水平的控制，输出机器人控制信号。下面一行是深度学习“端对端”的例子：输入观测值，通过神经网络，直接输出机器人控制信号。和机器视觉那个例子一样，这个深度网络也是需要通过大量的观测值-机器人控制信号的训练样本训练。
+&lt;img src=&quot;/pics/DRL1-3.png&quot; alt=&quot;Fig. 3 &quot; title=&quot;end to end2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5. 什么时候要用增强学习呢？&lt;/strong&gt; &lt;br /&gt;
+答：序列决策的时候。什么是序列决策呢？当你的系统是单一独立的决定，不影响到未来的决定的时候，就不需要序列决策，比如分类、逻辑回归。相反，当你的当前决定影响到未来决定的时候，你就需要考虑序列决策，比如机器人控制、自动车驾驶、语言对话和金融模型。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;6. 为什么现在要学习Deep RL呢？&lt;/strong&gt;&lt;br /&gt;
+ 答： 因为深度学习，增强学习以及计算能力的最新进展，创造了特别好的环境，Deep RL 是应运而生。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;7. 除了增强学习，还有其他形式的监督式学习吗?&lt;/strong&gt;&lt;br /&gt;
+ 答： 1) 模仿学习(Learning from demonstrations): 直接从观测行为中推断奖励。2) 从观测世界中学习(Learning from observing the world): 非监督式的方式学习预测。3) 任务学习（Learning from other tasks): 迁移学习，学习如何学习。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;8. Deep RL 现在可以做什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;9. Deep RL 的挑战是什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 人类学的很快，而Deep RL通常很慢 2）人类可以重新使用以前的只是，而迁移学习还是一个问题 3）奖励机制和预测模型应该如何设计，还不清楚。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 01 Nov 2017 13:45:00 -0600</pubDate>
+        <link>http://localhost:4000/2017/11/DRL2/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/DRL2/</guid>
+        
+        <category>DRL</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
+    
+      <item>
+        <title>Introduction and course overview [1]</title>
+        <description>&lt;h2 id=&quot;第一节-introduction-and-course-overview&quot;&gt;第一节: Introduction and course overview&lt;/h2&gt;
+&lt;p&gt;&lt;em&gt;Berkeley课程网站&lt;a href=&quot;http://rll.berkeley.edu/deeprlcourse/&quot;&gt;课件+视频&lt;/a&gt;&lt;br /&gt;
+第一节是对基本概念的介绍和名词的解释，包括deep learning, reinforcement learning 和 deep reinforcement learning。&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;1. 什么是Deep RL？&lt;/strong&gt; &lt;br /&gt;
+答: Deep RL包含了deep learing（深度学习）和reinforcement learning（增强学习）。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;2. 什么是Reinforcement learning？&lt;/strong&gt; &lt;br /&gt;
+答：增强学习就通过和环境互动，从环境中获得奖励来学习的一种方式。很通俗的一个例子是我们训练狗的时候，让它做一个动作，做的好就给肉吃（奖励），做的不好就挨打（惩罚）。通过一段时间的学习，这只狗就知道如何获得奖励不挨打。这整个训练的过程，狗是无法与人语言沟通的，在最开始并不知道应该怎么做可以吃肉，它是完全经过自己的经历和体验获得的这种“智慧”。&lt;/p&gt;
+
+&lt;p&gt;再如下图，是经典的RL模型，机器人做决定，执行行为（actions），环境会对行为给出反馈。这个反馈包括了新的观测结果和奖励反馈。这个反馈反作用于机器人，让它作下一次的行为决定。这个机器人和环境间互相作用，反复循环的模型就是RL。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pics/DRL1-1.png&quot; alt=&quot;Fig. 1  &quot; title=&quot;RL&quot; height=&quot;260px&quot; width=&quot;350px&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;3. Deep RL 现在可以做什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;4. 为什么要深度学习呢？&lt;/strong&gt; &lt;br /&gt;
+答：&lt;strong&gt;因为深度模型能帮助增强学习算法“端对端”(end-to-end)地解决复杂的问题。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;要理解”端对端“，可以看下面两张图。图1中，上面一行是一个标准的机器视觉算法例子：输入图像，提取特征，提取中层特征，分类器输出分类结果。下面一行是一个深度学习“端对端”的例子：输入图像，通过深度神经网络，直接输出分类结果。当然，这个深度神经网络是经过大量的图像-类别训练过的。
+&lt;img src=&quot;/pics/DRL1-2.png&quot; alt=&quot;Fig. 2  &quot; title=&quot;end to end1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;图2是在机器人领域的一个例子。上面一行是一个标准的机器人控制流程：观测数据，状态估计，模型预测，规划，低水平的控制，输出机器人控制信号。下面一行是深度学习“端对端”的例子：输入观测值，通过神经网络，直接输出机器人控制信号。和机器视觉那个例子一样，这个深度网络也是需要通过大量的观测值-机器人控制信号的训练样本训练。
+&lt;img src=&quot;/pics/DRL1-3.png&quot; alt=&quot;Fig. 3 &quot; title=&quot;end to end2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;5. 什么时候要用增强学习呢？&lt;/strong&gt; &lt;br /&gt;
+答：序列决策的时候。什么是序列决策呢？当你的系统是单一独立的决定，不影响到未来的决定的时候，就不需要序列决策，比如分类、逻辑回归。相反，当你的当前决定影响到未来决定的时候，你就需要考虑序列决策，比如机器人控制、自动车驾驶、语言对话和金融模型。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;6. 为什么现在要学习Deep RL呢？&lt;/strong&gt;&lt;br /&gt;
+ 答： 因为深度学习，增强学习以及计算能力的最新进展，创造了特别好的环境，Deep RL 是应运而生。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;7. 除了增强学习，还有其他形式的监督式学习吗?&lt;/strong&gt;&lt;br /&gt;
+ 答： 1) 模仿学习(Learning from demonstrations): 直接从观测行为中推断奖励。2) 从观测世界中学习(Learning from observing the world): 非监督式的方式学习预测。3) 任务学习（Learning from other tasks): 迁移学习，学习如何学习。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;8. Deep RL 现在可以做什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 通过简单和已知的法则，在某些领域得到高水平的熟练程度 2）只用简单的输入设备，通过足够多的经验训练，学习简单的行为 3）学习人类提供的专家行为。&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;9. Deep RL 的挑战是什么？&lt;/strong&gt; &lt;br /&gt;
+ 答： 1) 人类学的很快，而Deep RL通常很慢 2）人类可以重新使用以前的只是，而迁移学习还是一个问题 3）奖励机制和预测模型应该如何设计，还不清楚。&lt;/p&gt;
+
+</description>
+        <pubDate>Wed, 01 Nov 2017 13:45:00 -0600</pubDate>
+        <link>http://localhost:4000/2017/11/DRL1/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/11/DRL1/</guid>
+        
+        <category>DRL</category>
+        
+        
+        <category>tech</category>
+        
+      </item>
+    
+      <item>
+        <title>我的第一篇Blog</title>
+        <description>&lt;p&gt;&lt;strong&gt;世界在人的心里&lt;/strong&gt;，&lt;br /&gt;
+&lt;strong&gt;用心去聆听，去感受，&lt;/strong&gt; &lt;br /&gt;
+&lt;strong&gt;读懂人心，就是读懂世界。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/pics/test.jpg&quot; alt=&quot; &quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.express.co.uk/pictures/pics/1939/Man-and-nature-meet&quot;&gt;&lt;em&gt;图片来源&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;
+
+&lt;!--
+
+&lt;a href=&quot;https://www.youtube.com/watch?v=_W5RvymhYlI&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg&quot; 
+alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot; /&gt;&lt;/a&gt;
+
+&lt;a href=&quot;https://www.youtube.com/watch?v=1GN04W9lJMk&quot;&gt;&lt;img src=&quot;http://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg&quot; 
+alt=&quot;IMAGE ALT TEXT HERE&quot; width=&quot;240&quot; height=&quot;180&quot; border=&quot;10&quot; /&gt;&lt;/a&gt;
+
+
+##read[cmd-markdown](https://www.zybuluo.com/mdeditor)
+
+##read[jekyll-organization](http://jekyll.com.cn/docs/structure/)
+--&gt;
+
+</description>
+        <pubDate>Thu, 12 Jan 2017 03:11:11 -0700</pubDate>
+        <link>http://localhost:4000/2017/01/test_first/</link>
+        <guid isPermaLink="true">http://localhost:4000/2017/01/test_first/</guid>
+        
+        <category>Reading</category>
+        
+        
+        <category>reading</category>
+        
+      </item>
     
       <item>
         <title>Hello World - Vno</title>
